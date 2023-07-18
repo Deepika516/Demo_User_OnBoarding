@@ -4,13 +4,23 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <link
+    rel="stylesheet"
+    type="text/css"
+    href="/sourceloop-tour.scss"
+  />
+  <link rel="stylesheet" type="text/scss" href="/styles.scss" />
     <style>
               html,
               body {
                 .shepherd-element {
         @include sourceloopElement(color-white, 5px, 400px);
+        padding: 0;
+        margin: 0;
       }
-
+      .shepherd-modal-is-visible{
+        display: none;
+      }
       .tour-title {
         color: #bf0000;
         font-size: 16px;
@@ -62,7 +72,7 @@
       }
       .shepherd-button-skip,
       .shepherd-button-prev {
-        background-color: transparent !important;
+        background-color: transparent;
         border: 1px solid color-dark;
         border-radius: 4px;
         color: color-dark !important;
@@ -70,6 +80,7 @@
       .shepherd-button-prev {
         margin-right: 197px;
         width: 70px;
+        border: solid red;
       }
       .shepherd-button-prev-no-skip {
         margin-right: 254px;
@@ -85,15 +96,41 @@
       .shepherd-footer {
         border: 1px solid #f2f2f2;
         padding-top: 12px;
+        display: flex;
       }
 
       .tour-no-pointer-events {
         pointer-events: none;
       }
+      .button-wrapper{
+        display: flex;
+        justify-content: center;
+        background-color: black;
+        width: 100%;
+        height: 70px;
+        /* margin-left: 10%; */
+      }
+      .step-btn{
+        background-color: white;
+    border-radius: 50%;
+    margin-left: 10px;
+    margin-right: 10px;
+    font-size: 1.5rem;
+    padding-left: 20px;
+    padding-right: 20px;
+      }
     }
     </style>
   </head>
   <body>
+   <div class="button-wrapper">
+    <button class="dashboard-tour-step1 step-btn">STEP 1</button>
+    <button class="dashboard-tour-step2  step-btn ">STEP 2</button>
+    <button class="dashboard-tour-step3  step-btn">STEP 3</button>
+    <button class="dashboard-tour-step4  step-btn">STEP 4</button>
+    <button class="dashboard-tour-step5  step-btn">STEP 5</button>
+   </div>
+   
     <script type="text/javascript" src="./user-onboarding-element.js"></script>
     <script>
       (title = "MY TOUR"),
@@ -279,7 +316,18 @@
       <div class="tour-description">
       Sample Example for tour steps
       </div>`,
-    buttons: BUTTONS_FIRST_STEP,
+    buttons: [
+      {
+          text: 'Skip',
+          key: 'skipAction',
+          classes: 'shepherd-button-skip',
+        },
+        {
+          text: 'Next',
+          key: 'nextAction',
+          classes: 'shepherd-button-next',
+        },
+      ],
     attachTo: {
       element: '.dashboard-tour-step1',
       on: 'bottom',
@@ -462,13 +510,14 @@ function checkElement(attachTo) {
       // tourRunning$.next(false);
     });
 
-document.querySelector("#dashboard-tour-step1")
+//document.querySelector("#dashboard-tour-step1")
 // localStorage.setItem(TourId.DashboardTour,JSON.stringify(DASHBOARD_TOUR_STEPS ,TourId))
 localStorage.setItem(TourId.DashboardTour, JSON.stringify({
       tourId: TourId.DashboardTour,
       tourSteps: DASHBOARD_TOUR_STEPS,
     }));
 window.tourservice.run(TourId.DashboardTour)
+
     </script>
   </body>
 </html>
